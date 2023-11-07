@@ -20,8 +20,8 @@ for time in range(TIME):
     S += dS
     I += dI
     R += dR
-plt.plot(range(TIME), S_data, 'b', label = "S")
-plt.plot(range(TIME), I_data, 'r', label = "I")
-plt.plot(range(TIME), R_data, 'g', label = "R")
+plt.plot(range(TIME), S_data, "b", label="S")
+plt.plot(range(TIME), I_data, "r", label="I")
+plt.plot(range(TIME), R_data, "g", label="R")
 plt.legend()
 plt.show()
