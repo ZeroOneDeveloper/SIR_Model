@@ -60,4 +60,4 @@ with gr.Blocks() as demo:
     runButton.click(get_plot, [mu, beta, gamma, S, I, R], plot)
 
 if __name__ == "__main__":
-    demo.launch(share=True)
+    demo.launch(server_name='0.0.0.0', server_port=8080)
