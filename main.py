@@ -2,14 +2,15 @@ import gradio as gr
 import pandas as pd
 
 
-def get_plot(mu: int, beta: int, gamma: int, S: int, I: int, R: int):
+def get_plot(lam: float, mu: float, beta: float, gamma: float, S: float, I: float, R: float, T: int):
+    if S + I + R != 1:
+        raise ValueError("S + I + R must be 1")
     S_data, I_data, R_data = [], [], []
-    TIME = 1000
-    for time in range(TIME):
+    for time in range(int(T)):
         S_data.append(S)
         I_data.append(I)
         R_data.append(R)
-        dS = mu - beta * S * I - mu * S
+        dS = lam - beta * S * I - mu * S
         dI = beta * S * I - gamma * I - mu * I
         dR = gamma * I - mu * R
         S += dS
@@ -18,7 +19,7 @@ def get_plot(mu: int, beta: int, gamma: int, S: int, I: int, R: int):
 
     symbol = []
     for i in ['S', 'I', 'R']:
-        for _ in range(TIME):
+        for _ in range(int(T)):
             symbol.append(i)
 
     rates = []
@@ -28,7 +29,7 @@ def get_plot(mu: int, beta: int, gamma: int, S: int, I: int, R: int):
 
     graphData = pd.DataFrame({
         "symbol": symbol,
-        "time": list(range(TIME)) * 3,
+        "time": list(range(int(T))) * 3,
         "rates": rates
     })
 
@@ -48,16 +49,18 @@ def get_plot(mu: int, beta: int, gamma: int, S: int, I: int, R: int):
 with gr.Blocks() as demo:
     with gr.Row():
         with gr.Column():
-            mu = gr.Number(label="µ(개인의 사망률 & 모집단의 출생률)")
+            lam = gr.Number(label="λ(출생률)")
+            mu = gr.Number(label="µ(사망률)")
             beta = gr.Number(label="β(전파율)")
             gamma = gr.Number(label="γ(회복률)")
         with gr.Column():
             S = gr.Number(label="S(취약자 비율)")
             I = gr.Number(label="I(감염자 비율)")
             R = gr.Number(label="R(회복자 비율)")
+            T = gr.Number(label="TIME(시행 횟수)", value=1000)
     runButton = gr.Button("Run")
     plot = gr.LinePlot(show_label=False)
-    runButton.click(get_plot, [mu, beta, gamma, S, I, R], plot)
+    runButton.click(get_plot, [lam, mu, beta, gamma, S, I, R, T], plot)
 
 if __name__ == "__main__":
     demo.launch(server_name='0.0.0.0', server_port=8080)
