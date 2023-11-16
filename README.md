@@ -1,6 +1,6 @@
 # Exploring SIR Model, the disease spread model
 ### This is a repository to share the process of exploring the SIR model, and if there are any improvements or errors, please feel free to open the issue 😊
-## Math II Performance Evaluation Exploration Tasks for the 2nd Semester of 2023
+## 2023 Academic Festival | Math II Performance Evaluation Exploration Tasks for the 2nd Semester of 2023
 ## Reason For Selection
 To understand why differential equations are needed in the existing SIR disease spread model, and to implement them directly as Python to compare predictive results with actual epidemiological findings by applying disease prediction models to various infectious diseases, including COVID-19. Furthermore, we seek to explore variables that can improve prediction accuracy for different diseases by improving the SIR disease spread model.
 
